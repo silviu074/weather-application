@@ -1,6 +1,8 @@
 
 import axios from 'axios'
 import React, { useState, useEffect} from 'react'
+import { City } from './Components/City'
+import '../src/Style/MainPage.css'
 
 
 
@@ -29,11 +31,14 @@ function App() {
 
   console.log(cityInfo)
 
+  
+
   return (
     <div>
       {loading ? 'Loading' : null}
       {error ? 'Something went wrong' : null}
       <h1>Weather app</h1>
+      <City/>
     </div>
   );
 }
