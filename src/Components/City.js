@@ -1,110 +1,107 @@
 import React from 'react'
 import { useState } from 'react';
 import axios from 'axios'
+import { RenderCity } from './RenderCity';
+import '../Style/City.css'
 
 
 export const City = ({ APIkey, cityInfo }) => {
 
   const [favoriteCities, setFavoriteCities] = useState([]);
   const [customCity, setCustomCity] = useState('')
-  const [customCityData, setCustomCityData] = useState([])
-  const [cityDataList, setCityDataList] = useState([]);
 
   const toggleCitySelection = (city) => {
     setFavoriteCities((favoriteCities) =>
-      // If the city is already selected, remove it from the list
-      favoriteCities.includes(city)
-        ? favoriteCities.filter((c) => c !== city)
-        // If the city is not selected, add it to the list
+      favoriteCities.some((c) => c.name === city.name)
+        ? favoriteCities.filter((c) => c.name !== city.name)
         : [...favoriteCities, city]
     );
   };
 
-  const addCustomCity = (event) => {
-  event.preventDefault();
-  // Check if the custom city input is not empty or just whitespace
-  if (customCity.trim()) {
-    // Add the custom city to the list of selected cities
-    setFavoriteCities((favoriteCities) => [...favoriteCities, customCity.trim()]);
+  const addCityToFavorite = (city) => {
+    // Check if the custom city is not already in the list of favorite cities
+    if (!favoriteCities.some((c) => c.name === city.name)) {
+      // Add the new city to the list of favorite cities
+      setFavoriteCities((favoriteCities) => [...favoriteCities, city]);
+    }
     // Clear the custom city input
     setCustomCity('');
-  }
-};
+  };
+
+  const addCustomCity = (event) => {
+    event.preventDefault();
+    // Check if the custom city input is not empty or just whitespace
+    if (customCity.trim()) {
+      // Getting the object information about the searched city
+      axios
+        .get(`https://api.openweathermap.org/data/2.5/weather?q=${customCity.trim()}&APPID=${APIkey}`)
+        .then(response => {
+          const newCity = {
+            name: response.data.name,
+            weather: response.data.weather[0].main,
+            weatherDescription: response.data.weather[0].description,
+            temperature: response.data.main.temp,
+            humidity: response.data.main.humidity,
+            windSpeed: response.data.wind.speed,
+          };
+          addCityToFavorite(newCity);
+        })
+        .catch(err => {
+          alert('The name of the city you wanted to search is invalid')
+          console.log(err);
+        });
+    }
+  };
 
   // Function to remove a city from the list of selected cities
   const removeCity = (city) => {
     setFavoriteCities((favoriteCities) => favoriteCities.filter((c) => c !== city));
   };
 
-  // preparing for useEffect here
-  const submitButton = () => {
-    console.log(customCity)
-      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${customCity}&APPID=${APIkey}`)
-        .then(response => {
-          setCustomCityData(response.data)
-
-          // Checking if the customCityData is empty, if its not -> add it to the list
-
-          if (customCityData) {
-          setCityDataList(prevList => [...prevList, customCityData])}
-        })
-        .catch(err => {
-          setCustomCityData([])
-            console.log(err)
-        })
-
-   console.log(customCityData)
-   console.log(cityDataList)
-
-  }
-
   return (
     <div>
-    <h2>Examples of cities to add to your favorites:</h2>
+      <h2>Examples of cities to add to your favorites:</h2>
 
-    {/* cityInfo && acts as a null or undefined check before using the map function */}
+      {/* "cityInfo &&" acts as a null or undefined check before using the map function */}
+      {cityInfo && cityInfo.map((city) => (
+        <div key={city.name}>
+          <input
+            type="checkbox"
+            value={city}
+            // Check if the city is selected
+            checked={favoriteCities.includes(city)}
+            // Toggle the selection of the city when the checkbox is clicked
+            onChange={() => toggleCitySelection(city)}
+          />
+          {city.name}
+        </div>
+      ))}
 
-    {cityInfo && cityInfo.map((city) => (
-      <div key={city.name}>
-        <input
-          type="checkbox"
-          value={city.name}
-          // Check if the city is selected
-          checked={favoriteCities.includes(city.name)}
-          // Toggle the selection of the city when the checkbox is clicked
-          onChange={() => toggleCitySelection(city.name)}
-        />
-        {city.name}
-      </div>
+      <form onSubmit={addCustomCity}>
+        <label>
+          Add custom city:
+          <input
+            type="text"
+            value={customCity}
+            onChange={(event) => setCustomCity(event.target.value)}
+          />
+        </label>
+        <button type="submit">Add</button>
+      </form>
+      {/* Rendering the Favorite cities */}
+      {favoriteCities.length > 0 && (
+        <>
+          <h2>Favorites:</h2>
+          <ul>
+            {favoriteCities.map((city) => (
+              <div className='renderCityBox'>
+                <RenderCity city={city} />
+                <button className='removeButton' onClick={() => removeCity(city)}>X</button>
+                </div>  
     ))}
-
-
-     <form onSubmit={addCustomCity}>
-      <label>
-        Add custom city:
-        <input
-          type="text"
-          value={customCity}
-          onChange={(event) => setCustomCity(event.target.value)}
-        />
-      </label>
-      <button type="submit" onClick={submitButton}>Add</button>
-    </form>
-    {/* Rendering the Favorite cities */}
-    {favoriteCities.length > 0 && (
-      <>
-        <h2>Favorites:</h2>
-        <ul>
-          {favoriteCities.map((city) => (
-            <li key={city}>
-              {city}
-              {/* Creating a button to remove any city */}
-              <button onClick={() => removeCity(city)}>X</button>
-            </li>
-          ))}
-        </ul>
-      </>
-    )}
+  </ul>
+</>
+)}
   </div>
   )
 }
