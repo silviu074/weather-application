@@ -1,12 +1,14 @@
 import React from 'react'
 import { useState } from 'react';
+import axios from 'axios'
 
-const presetCities = ['New York', 'London', 'Paris', 'Tokyo', 'Sydney'];
 
-export const City = () => {
+export const City = ({ APIkey, cityInfo }) => {
 
   const [favoriteCities, setFavoriteCities] = useState([]);
-  const [customCity, setCustomCity] = useState('');
+  const [customCity, setCustomCity] = useState('')
+  const [customCityData, setCustomCityData] = useState([])
+  const [cityDataList, setCityDataList] = useState([]);
 
   const toggleCitySelection = (city) => {
     setFavoriteCities((favoriteCities) =>
@@ -19,47 +21,74 @@ export const City = () => {
   };
 
   const addCustomCity = (event) => {
-    event.preventDefault();
-    // Check if the custom city input is not empty or just whitespace
-    if (customCity.trim()) {
-      // Add the custom city to the list of selected cities
-      setFavoriteCities((favoriteCities) => [...favoriteCities, customCity.trim()]);
-      // Clear the custom city input
-      setCustomCity('');
-    }
-  };
+  event.preventDefault();
+  // Check if the custom city input is not empty or just whitespace
+  if (customCity.trim()) {
+    // Add the custom city to the list of selected cities
+    setFavoriteCities((favoriteCities) => [...favoriteCities, customCity.trim()]);
+    // Clear the custom city input
+    setCustomCity('');
+  }
+};
 
   // Function to remove a city from the list of selected cities
   const removeCity = (city) => {
     setFavoriteCities((favoriteCities) => favoriteCities.filter((c) => c !== city));
   };
 
+  // preparing for useEffect here
+  const submitButton = () => {
+    console.log(customCity)
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${customCity}&APPID=${APIkey}`)
+        .then(response => {
+          setCustomCityData(response.data)
+
+          // Checking if the customCityData is empty, if its not -> add it to the list
+
+          if (customCityData) {
+          setCityDataList(prevList => [...prevList, customCityData])}
+        })
+        .catch(err => {
+          setCustomCityData([])
+            console.log(err)
+        })
+
+   console.log(customCityData)
+   console.log(cityDataList)
+
+  }
+
   return (
     <div>
     <h2>Examples of cities to add to your favorites:</h2>
-    {/* Render a checkbox and label for each preset city */}
-    {presetCities.map((city) => (
-      <div key={city}>
+
+    {/* cityInfo && acts as a null or undefined check before using the map function */}
+
+    {cityInfo && cityInfo.map((city) => (
+      <div key={city.name}>
         <input
           type="checkbox"
-          value={city}
+          value={city.name}
           // Check if the city is selected
-          checked={favoriteCities.includes(city)}
+          checked={favoriteCities.includes(city.name)}
           // Toggle the selection of the city when the checkbox is clicked
-          onChange={() => toggleCitySelection(city)}
+          onChange={() => toggleCitySelection(city.name)}
         />
-        {city}
+        {city.name}
       </div>
     ))}
 
 
-    <form onSubmit={addCustomCity}>
+     <form onSubmit={addCustomCity}>
       <label>
         Add custom city:
-        {/* Set the value of a custom city */}
-        <input type="text" value={customCity} onChange={(event) => setCustomCity(event.target.value)} />
+        <input
+          type="text"
+          value={customCity}
+          onChange={(event) => setCustomCity(event.target.value)}
+        />
       </label>
-      <button type="submit">Add</button>
+      <button type="submit" onClick={submitButton}>Add</button>
     </form>
     {/* Rendering the Favorite cities */}
     {favoriteCities.length > 0 && (
