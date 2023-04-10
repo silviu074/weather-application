@@ -60,11 +60,11 @@ export const City = ({ APIkey, cityInfo }) => {
 
   return (
     <div>
-      <h2>Examples of cities to add to your favorites:</h2>
+      <h3>Examples of cities to display information about:</h3>
 
       {/* "cityInfo &&" acts as a null or undefined check before using the map function */}
       {cityInfo && cityInfo.map((city) => (
-        <div key={city.name}>
+        <div key={city.name} className='padding-bottom-1'>
           <input
             type="checkbox"
             value={city}
@@ -79,14 +79,15 @@ export const City = ({ APIkey, cityInfo }) => {
 
       <form onSubmit={addCustomCity}>
         <label>
-          Add custom city:
+          Search another city: 
           <input
             type="text"
+            placeholder="Type here"
             value={customCity}
             onChange={(event) => setCustomCity(event.target.value)}
           />
         </label>
-        <button type="submit">Add</button>
+        <button type="submit">View</button>
       </form>
       {/* Rendering the Favorite cities */}
       {favoriteCities.length > 0 && (

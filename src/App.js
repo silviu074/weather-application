@@ -31,7 +31,7 @@ function App() {
               windSpeed: response.data.wind.speed,
             };
           } catch (error) {
-            console.error(error);
+            console.error(`There was a problem: ${error}`);
             return null;
           }
         })
@@ -40,7 +40,6 @@ function App() {
     };
     fetchData();
   }, [APIkey, presetCities]);
-  
 
   return (
     <div>

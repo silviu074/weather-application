@@ -1,7 +1,10 @@
 .renderCityBox{
-    background-color: blue;
-    height:200px;
-    width:300px;
+  display: inline-block;
+  margin: 3% 0 0 3%;
+  border: 5px solid black;
+  border-radius: 15px;
+  height:200px;
+  width:300px;
 }
 
 .removeButton{
@@ -11,4 +14,8 @@
   width: 20px;
   height: 20px;
   border: 1px solid #ccc;
+}
+
+.padding-bottom-1{
+  padding-bottom: 1%;
 }

@@ -1,0 +1,25 @@
+.clear {
+    background-image: url('../images/clear.png');
+    color: white;
+  }
+
+.clouds {
+    background-image: url('../images/clouds.png');
+    color: white;
+  }
+
+.rain {
+    background-image: url('../images/rain.png');
+    color: white;
+  }
+
+.fog {
+    background-image: url('../images/fog.png');
+    color: white;
+  }
+
+  
+.default {
+    background-color: gray;
+    color: black;
+}

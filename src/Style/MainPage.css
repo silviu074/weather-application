@@ -9,5 +9,10 @@ html, body {
 
   
 body {
-    position: relative
+  color:white;
+  height:100vh;
+  text-align: center;
+  position: relative;
+  background: linear-gradient(110deg, rgb(134, 85, 29) 60%, orange 60%);
+  backdrop-filter: blur(15px);
   }
