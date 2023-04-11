@@ -3,8 +3,6 @@
 
 html, body {
     overflow-x: hidden;
-    font-family: -apple-system,BlinkMacSystemFont,"Apple Color Emoji","SF Pro","SF Pro Icons",
-    "Helvetica Neue",Helvetica,Arial,sans-serif;
   }
 
   
@@ -13,6 +11,44 @@ body {
   height:100vh;
   text-align: center;
   position: relative;
-  background: linear-gradient(110deg, rgb(134, 85, 29) 60%, orange 60%);
   backdrop-filter: blur(15px);
+  }
+
+.light-theme {
+  background: linear-gradient(110deg, rgb(190, 121, 42) 60%, orange 60%);
+}
+  
+.dark-theme {
+  background: linear-gradient(110deg, rgb(4, 0, 39) 60%, rgb(5, 0, 70) 60%);
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 34px;
+  border: none;
+  background-color: white;
+  border-radius: 17px;
+  padding: 2px;
+  cursor: pointer;
+}
+  
+.theme-toggle:focus {
+  outline: none;
+}
+  
+.theme-toggle-thumb {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-color: orange;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+  
+.theme-toggle-thumb.dark {
+  transform: translateX(26px);
+  background-color: rgb(7, 7, 107);
   }

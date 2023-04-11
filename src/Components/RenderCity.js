@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../Style/City.module.css'
+import '../Style/City.css'
 
 export const RenderCity = (data) => {
   
@@ -8,12 +8,8 @@ export const RenderCity = (data) => {
   const fahrenheit = Math.round((celsius * 1.8) + 32);
 
   return (
-    <div className={
-          data.city.weather === 'Clear' ? styles.clear :
-          data.city.weather === 'Fog' ? styles.fog :
-          data.city.weather === 'Clouds' ? styles.clouds :
-          data.city.weather === 'Rain' ? styles.rain : styles.default}>
-      <h2>{data.city.name}</h2>
+    <div>
+      <div className='cityTitle'>{data.city.name}</div>
       {`Description: ${data.city.weather}`} <br/>
       {`Detailed description: ${data.city.weatherDescription}`} <br/>
       {`Temperature: ${fahrenheit} °F / ${celsius} °C`} <br/>
