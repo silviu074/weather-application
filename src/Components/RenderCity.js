@@ -3,6 +3,7 @@ import '../Style/City.css'
 
 export const RenderCity = (data) => {
   
+  // Converting the temperature from Kelvin to °C & °F
   const kelvin = data.city.temperature
   const celsius = Math.round(kelvin - 273.15);
   const fahrenheit = Math.round((celsius * 1.8) + 32);
