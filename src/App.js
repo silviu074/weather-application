@@ -3,6 +3,7 @@ import axios from 'axios'
 import React, { useState, useEffect, useMemo} from 'react'
 import { City } from './Components/City'
 import '../src/Style/MainPage.css'
+import appLogoLight from '../src/images/appLogoLight.png'
 
 
 
@@ -12,6 +13,19 @@ function App() {
   const APIkey = `621f1f003c7991f2765209be469931c2`;
   const presetCities = useMemo(() => ['New York', 'London', 'Paris', 'Tokyo', 'Sydney'], []);
   const [theme, setTheme] = useState('light');
+  const [date, setDate] = useState(new Date());
+
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const dateString = date.toLocaleDateString(undefined, options);
+  const timeString = date.toLocaleTimeString();
+
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDate(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   // API request
 
@@ -59,7 +73,11 @@ function App() {
 
   return (
     <div className={`App ${theme}`}>
-      <h1>Weather app</h1>
+      <div className="dateAndTime">
+         <img className='appIcon' src={appLogoLight} alt='appLogoLight'/>
+          {dateString} <br/>
+          {timeString}
+    </div>
       <button className="theme-toggle" onClick={toggleTheme}>
         <span className={`theme-toggle-thumb ${theme}`} />
       </button>

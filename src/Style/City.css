@@ -1,60 +1,224 @@
-.renderCityBox{
+.renderBox{
+  color:black !important;
+  -webkit-box-shadow: 5px 6px 15px -7px #000000; 
+  box-shadow: 5px 6px 15px -7px #000000;
+  background-color: white;
   display: inline-block;
   margin: 3% 0 0 3%;
-  border: 5px solid black;
   border-radius: 15px;
-  height:300px;
-  width:300px;
+  height:270px;
+  width:350px;
+  text-align: left;
+  padding-left: 20px;
 }
 
-.renderCityBoxFavorite{
-  display: inline-block;
-  margin: 3% 0 0 3%;
-  border: 5px solid black;
-  border-radius: 15px;
-  height:250px;
-  width:300px;
-}
 
 .removeButton{
+  background-color: white;
   display: inline-block;
   align-items: center;
   justify-content: center;
   width: 30px;
   height: 30px;
+  border: none;
   border-radius: 15px;
-  margin-left:calc(100% - 40px);
-  margin-top:5px;
+  margin-left:calc(100% - 50px);
+  margin-top:15px;
 }
 
 .favoriteButton{
+  background-color: white;
   display: inline-block;
   align-items: center;
   justify-content: center;
   width: 30px;
   height: 30px;
-  border-radius: 15px;
-  margin-left:calc(100% - 40px);
+  border: none;
+  margin-left:calc(100% - 50px);
   margin-top:10px;
 }
 
-.cityTitle{
-  padding:0 0 15px 0;
-  font-size: xx-large;
+.icon{
+  margin-left:65%;
+  margin-top:-33%;
 }
 
-.padding-bottom-5{
-  padding-bottom: 5%;
+.smallIcon{
+  max-width: 35px;
+  outline: red;
+}
+
+.smallIcon:hover{
+  cursor: pointer;
+}
+
+.appIcon{
+  display: block;
+  max-width: 150px;
+  margin-left: calc(50% - 75px);
+}
+
+.individualInput{
+  padding-left: 3%;
+}
+
+.checkboxes{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cityTitle{
+  font-family: 'Poppins', sans-serif;
+  padding:0 0 0 0;
+  font-size: large;
+  font-weight: 500;
+  padding-bottom: 10%;
+}
+
+.temperature{
+  font-family: 'Poppins', sans-serif;
+  font-size: x-large;
+  font-weight: 600;
+  margin-top: 15%;
+}
+
+.description{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  margin-top:-23%;
+}
+
+.edit{
+  visibility: hidden;
 }
 
 .padding-bottom-1{
   padding-bottom: 1%;
 }
 
+.padding-bottom-5{
+  padding-bottom: 5%;
+}
+
+.padding-top-1{
+  padding-top: 1%;
+}
+
 .padding-top-3{
   padding-top: 3%;
 }
 
+.dateAndTime{
+  font-family: 'Poppins', sans-serif;
+  font-size: xx-large;
+  font-weight: 600;
+  margin: 3% 0 1% 0;
+}
+
 ul{
   padding-inline-start: 0;
+}
+
+.inputStyle{
+  border-radius: 10px;
+  margin: 0 10px 0 10px;
+  height:25px;
+  border: 1px none #000000;
+  box-shadow: 3px 3px 10px -7px #000000;
+}
+
+.viewButton{
+  background-color: white;
+  border-radius: 10px;
+  margin: 0 5px 0 0;
+  width:60px;
+  height:30px;
+  border: 1px none #000000;
+}
+
+.viewButton:hover{
+  cursor: pointer;
+  pointer-events: all;
+  background-color:rgb(3, 5, 112);
+  color:white;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eeeeee;
+  border-radius: 5px;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: rgb(138, 237, 250);
+}
+
+.container input:checked ~ .checkmark {
+  background-color: rgb(138, 237, 250);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator to look like a V */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+@media only screen and (max-width: 480px) {
+  .viewButton{
+      width:80%;
+      margin-top:10px;
+      border:1px solid rgb(197, 197, 197);
+  }
+  .inputStyle{
+    border:1px solid rgb(197, 197, 197);
+    box-shadow: none;
+  }
+  .renderBox{
+    max-width: 330px;
+    margin-left:0;
+  }
 }
